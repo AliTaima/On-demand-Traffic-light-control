@@ -10,5 +10,9 @@ ECUAL\LED\led.c
 
 main.c
 
-MCAL\DIO\DIO.c
+MCAL\DIO\dio.c
+
+MCAL\DIO\test.c
+
+MCAL\Timer\timer.c
 

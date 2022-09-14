@@ -40,6 +40,7 @@ SUBDIRS :=  \
 ../Application \
 ../MCAL/DIO \
 ../MCAL/Interrupt_Library \
+../MCAL/Timer \
 ../Utilities
 
 
@@ -49,7 +50,9 @@ C_SRCS +=  \
 ../ECUAL/BUTTON/button.c \
 ../ECUAL/LED/led.c \
 ../main.c \
-../MCAL/DIO/DIO.c
+../MCAL/DIO/dio.c \
+../MCAL/DIO/test.c \
+../MCAL/Timer/timer.c
 
 
 PREPROCESSING_SRCS += 
@@ -63,28 +66,36 @@ Application/application.o \
 ECUAL/BUTTON/button.o \
 ECUAL/LED/led.o \
 main.o \
-MCAL/DIO/DIO.o
+MCAL/DIO/dio.o \
+MCAL/DIO/test.o \
+MCAL/Timer/timer.o
 
 OBJS_AS_ARGS +=  \
 Application/application.o \
 ECUAL/BUTTON/button.o \
 ECUAL/LED/led.o \
 main.o \
-MCAL/DIO/DIO.o
+MCAL/DIO/dio.o \
+MCAL/DIO/test.o \
+MCAL/Timer/timer.o
 
 C_DEPS +=  \
 Application/application.d \
 ECUAL/BUTTON/button.d \
 ECUAL/LED/led.d \
 main.d \
-MCAL/DIO/DIO.d
+MCAL/DIO/dio.d \
+MCAL/DIO/test.d \
+MCAL/Timer/timer.d
 
 C_DEPS_AS_ARGS +=  \
 Application/application.d \
 ECUAL/BUTTON/button.d \
 ECUAL/LED/led.d \
 main.d \
-MCAL/DIO/DIO.d
+MCAL/DIO/dio.d \
+MCAL/DIO/test.d \
+MCAL/Timer/timer.d
 
 OUTPUT_FILE_PATH +=Traffic-light-control.elf
 
@@ -128,7 +139,21 @@ ECUAL/LED/led.o: ../ECUAL/LED/led.c
 	@echo Finished building: $<
 	
 
-MCAL/DIO/DIO.o: ../MCAL/DIO/DIO.c
+MCAL/DIO/dio.o: ../MCAL/DIO/dio.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/DIO/test.o: ../MCAL/DIO/test.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/Timer/timer.o: ../MCAL/Timer/timer.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -21,10 +21,10 @@
 #define LED_C_1_PIN PIN0
 // define led2 port and pin
 #define LED_C_2_PORT PORT_A
-#define LED_C_2_PIN PIN3
+#define LED_C_2_PIN PIN1
 // define led3 port and pin
 #define LED_C_3_PORT PORT_A
-#define LED_C_3_PIN PIN7
+#define LED_C_3_PIN PIN2
 
 /************************************************************************/
 /*					3LEDs for pedestrians                               */

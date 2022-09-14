@@ -20,7 +20,7 @@ void App_init(void)
 	
 	//3. Enable global interrupt(setting bit 7 in status register to 1
 	sei();
-	//4. Choosing the external interrupt snese (sense on the rising edge)
+	//4. Choosing the external interrupt sense (sense on the rising edge)
 	MCUCR |= (1<<0) | (1<<1);
 	//5. Enable External interrupt 0(INT0)
 	GICR |= (1<<6);
