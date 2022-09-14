@@ -5,14 +5,12 @@
  * Author : Ali Mohamed Taima
  */ 
 
-#include <avr/io.h>
+
 
 
 int main(void)
 {
-    /* Replace with your application code */
-    while (1) 
-    {
-    }
+  App_init();
+  App_start();
 }
 

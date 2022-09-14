@@ -9,7 +9,14 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+// Including led and button modules from lower layer
+#include "../ECUAL/LED/led.h"
+#include "../ECUAL/Button/button.h"
 
+// Function prototypes
+
+void App_init(void);
+void App_start(void);
 
 
 

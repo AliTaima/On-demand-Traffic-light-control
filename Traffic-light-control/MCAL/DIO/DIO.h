@@ -9,7 +9,35 @@
 #ifndef DIO_H_
 #define DIO_H_
 
+// include register header
+#include "../../Utilities/registers.h"
+// include types header
+#include "../../Utilities/types.h"
+// include interrupt header
+#include "../Interrupt_Library/interrupts.h"
+/************************************************************************/
+/* define helpfull macros                                               */
+/************************************************************************/
+// set pin macro(make PIN_NO = 1)
+#define SET_PIN(X, PIN_NO) X |= (1 << PIN_NO)
+// clear pin macro(make PIN_NO = 0)
+#define CLR_PIN(X, PIN_NO) X &= ~(1 << PIN_NO)
+// toggle pin macro(make PIN_NO = 0 then PIN_NO = 1 and so on...)
+#define TOGGLE_PIN(X, PIN_NO) X ^= (1 << PIN_NO)
+// get status of the pin(read pin) to see it high or low(X--> the value, Y--> the PIN_name)for example(*value, PINA, PIN4)
+#define GET_STATE(X, Y, PIN_NO) X = (Y &(1<<PIN_NO))>>PIN_NO
 
+
+// all driver macros
+// all driver function prototypes
+
+void DIO_init(EN_port_t portNumber, EN_pin_t pinNumber, EN_direction_t direction); // Initialize dio direction
+
+void DIO_write(EN_port_t portNumber, EN_pin_t pinNumber, EN_value_t value); // write data to dio
+
+void DIO_toggle(EN_port_t portNumber, EN_pin_t pinNumber); // toggle dio
+
+void DIO_read(EN_port_t portNumber, EN_pin_t pinNumber, uint8_t *value); // read dio
 
 
 

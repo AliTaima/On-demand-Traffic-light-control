@@ -120,9 +120,52 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application\application.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Application\application.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\BUTTON\button.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\BUTTON\button.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\LED\led.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\LED\led.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\DIO\DIO.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\DIO\DIO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Interrupt_Library\interrupts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utilities\registers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utilities\types.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ECUAL\LED" />
+    <Folder Include="ECUAL\BUTTON" />
+    <Folder Include="MCAL" />
+    <Folder Include="ECUAL" />
+    <Folder Include="Application" />
+    <Folder Include="MCAL\DIO" />
+    <Folder Include="MCAL\Interrupt_Library" />
+    <Folder Include="Utilities" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
