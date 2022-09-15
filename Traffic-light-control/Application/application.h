@@ -13,6 +13,11 @@
 #include "../ECUAL/LED/led.h"
 #include "../ECUAL/Button/button.h"
 
+// enum for mode
+typedef enum EN_mode_t
+{
+	NORMAL, PEDESTRAIN
+	}EN_mode_t;
 // Function prototypes
 
 void App_init(void);
