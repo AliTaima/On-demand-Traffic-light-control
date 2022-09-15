@@ -64,7 +64,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="188" flags="80000000" y="249" h="32" pid="14" iid="1">
+   <POPUP w="16" x="188" flags="00000000" y="249" h="32" pid="14" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -93,6 +93,9 @@
      <ITEM name="ShowToolTips">Yes</ITEM>
      <ITEM name="TopLineAddress">00000020</ITEM>
     </PROPERTIES>
+   </POPUP>
+   <POPUP w="695" x="403" flags="00008001" y="246" h="453" pid="0" iid="16">
+    <PROPERTIES/>
    </POPUP>
   </PWI>
  </MODULE>
