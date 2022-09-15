@@ -7,10 +7,14 @@
 
 
 
+// #include <avr/io.h>
+//#include <util/delay.h>
+#include "Application/application.h"
+int main(void)
+{
 
-// int main(void)
-// {
-//   App_init();
-//   App_start();
-// }
+  App_init();
+  App_start();
+	
+}
 
