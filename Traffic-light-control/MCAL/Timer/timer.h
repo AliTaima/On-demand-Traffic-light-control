@@ -20,7 +20,5 @@ void TIMER_start(uint16_t preScalar, uint32_t number_of_overflow);
 void TIMER_stop(void);
 void delay_512ms(void);
 void delay_5s(void);
-void delay_5s_toggle(EN_port_t ledPort, EN_pin_t ledPin);
-
 
 #endif /* TIMER_H_ */
