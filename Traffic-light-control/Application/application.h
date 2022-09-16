@@ -13,16 +13,16 @@
 #include "../ECUAL/LED/led.h"
 #include "../ECUAL/Button/button.h"
 
-// enum for mode
-typedef enum EN_mode_t
+// enum for traffic light colors
+typedef enum EN_button_color_t
 {
-	NORMAL, PEDESTRAIN
-	}EN_mode_t;
+	RED, YELLOW, GREEN
+	}EN_button_color_t;
 // Function prototypes
 
 void App_init(void);
 void App_start(void);
-
+void pedestrain_mode(void);
 
 
 #endif /* APPLICATION_H_ */
