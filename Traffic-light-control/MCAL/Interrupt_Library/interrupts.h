@@ -9,6 +9,8 @@
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
 
+//including dio
+#include "../DIO/dio.h"
 /************************************************************************/
 /*						 Interrupts vectors                            */
 /************************************************************************/
@@ -31,6 +33,7 @@
 #define ISR(INT_VECT)void INT_VECT(void) __attribute__ ((signal, used));\
 void INT_VECT(void)
 
+void interrupt_rising_init(void);
 
 
 #endif /* INTERRUPTS_H_ */
