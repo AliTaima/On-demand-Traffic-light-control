@@ -163,6 +163,9 @@
     <Compile Include="MCAL\DIO\test.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Interrupt_Library\interrupts.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\Interrupt_Library\interrupts.h">
       <SubType>compile</SubType>
     </Compile>
