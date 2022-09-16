@@ -17,27 +17,27 @@
 /*					3LEDs for cars										*/
 /************************************************************************/
 // define led1 port and pin
-#define LED_C_1_PORT PORT_A
-#define LED_C_1_PIN PIN0
+#define LED_C_RED_PORT PORT_A
+#define LED_C_RED_PIN PIN0
 // define led2 port and pin
-#define LED_C_2_PORT PORT_A
-#define LED_C_2_PIN PIN1
+#define LED_C_YELLOW_PORT PORT_A
+#define LED_C_YELLOW_PIN PIN1
 // define led3 port and pin
-#define LED_C_3_PORT PORT_A
-#define LED_C_3_PIN PIN2
+#define LED_C_GREEN_PORT PORT_A
+#define LED_C_GREEN_PIN PIN2
 
 /************************************************************************/
 /*					3LEDs for pedestrians                               */
 /************************************************************************/
 // define led1 port and pin
-#define LED_P_1_PORT PORT_A
-#define LED_P_1_PIN PIN0
+#define LED_P_RED_PORT PORT_B
+#define LED_P_RED_PIN PIN0
 // define led2 port and pin
-#define LED_P_2_PORT PORT_A
-#define LED_P_2_PIN PIN3
+#define LED_P_YELLOW_PORT PORT_B
+#define LED_P_YELLOW_PIN PIN1
 // define led3 port and pin
-#define LED_P_3_PORT PORT_A
-#define LED_P_3_PIN PIN7
+#define LED_P_GREEN_PORT PORT_B
+#define LED_P_GREEN_PIN PIN2
 
 // functions prototypes
 void LED_init(EN_port_t ledPort, EN_pin_t ledPin);
