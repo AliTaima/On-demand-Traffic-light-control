@@ -13,12 +13,9 @@
 int main(void)
 {
 
-  App_init();
-  while(1)
-  {
-	 App_start();
-  
-  }
+	App_init();
+	App_start();
+ 
 	
 }
 
