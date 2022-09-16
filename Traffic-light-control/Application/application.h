@@ -18,11 +18,20 @@ typedef enum EN_button_color_t
 {
 	RED, YELLOW, GREEN
 	}EN_button_color_t;
+// enum for mode
+typedef enum EN_mode_t
+{
+	NORMAL, PEDESTRIAN
+	}EN_mode_t;
 // Function prototypes
+
 
 void App_init(void);
 void App_start(void);
-void pedestrain_mode(void);
+void pedestrian_mode(void);
+void GreenLED(void);
+void RedLED(void);
+void YellowLED(void);
 
 
 #endif /* APPLICATION_H_ */
