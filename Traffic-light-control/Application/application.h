@@ -23,6 +23,10 @@ typedef enum EN_mode_t
 {
 	NORMAL, PEDESTRIAN
 	}EN_mode_t;
+typedef enum EN_interrupt_state_t
+{
+	INTERRUPT_ON, INTERRUPT_OFF
+	}EN_interrupt_state_t;
 // Function prototypes
 
 
@@ -32,6 +36,6 @@ void pedestrian_mode(void);
 void GreenLED(void);
 void RedLED(void);
 void YellowLED(void);
-
-
+void PedestrianMode(void);
+void TurnOffLEDs(void);
 #endif /* APPLICATION_H_ */

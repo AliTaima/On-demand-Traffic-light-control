@@ -20,23 +20,31 @@ void App_init(void)
 	Button_init(EXT_INT_BUTTON_PORT, EXT_INT_BUTTON_PIN);
 	// 3. initialize external interrupt 1
 	interrupt_rising_init();
+	// 4. initialize timer
 	TIMER_init();
 }
+// To store the mode 
 EN_mode_t mode = NORMAL;
 EN_button_color_t color;
-
+EN_interrupt_state_t interrupt_state = INTERRUPT_OFF; 
 void App_start(void)
 {
 	while (1)
 	{
 		if(mode == NORMAL)
 		{
+			TurnOffLEDs();
 			// turn on cars' Red LED for 5 s and pedestrian's Green LED will be on
 			LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
 			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
 			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 			delay_5s();
+			// check if interrupt is or not to run pedestrian mode
+			if(interrupt_state  == INTERRUPT_ON)
+			{
+				continue;
+			}
 			// Turn on cars' Yellow led for 5 s and pedestrian's Yellow LED will be on
 			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
@@ -44,6 +52,11 @@ void App_start(void)
 			LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
 			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 			delay_5s();
+			// check if interrupt is or not to run pedestrian mode
+			if(interrupt_state  == INTERRUPT_ON)
+			{
+				continue;
+			}
 			// Turn on cars' Green led for 5 s and pedestrian's Red LED will be on
 			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
@@ -51,108 +64,125 @@ void App_start(void)
 			LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 			LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
 			delay_5s();
-			LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
-			
 		}
 		else if (mode == PEDESTRIAN)
 		{
-			
-			// turn off all cars' LEDs
-			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
-			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
-			// turn off all pedestrian's LEDs
-			LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
-			LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-			LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
-			//Applying pedestrian mode according to cars' LEDs
-			if (color == RED)
-			{
-				LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
-				LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
-				delay_5s();
-				
-			}
-			else if (color == GREEN)
-			{
-				LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
-				LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
-				delay_5s();
-				LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
-				LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-				LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				delay_5s();
-				LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-				LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
-				LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
-				LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
-				delay_5s();
-				
-				
-			}
-			else if (color == YELLOW)
-			{
-				LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
-				delay_5s();
-				LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
-				LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-				LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				delay_5s();
-				LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-				LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-				LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
-				LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
-				delay_5s();
-				
-				
-			}
-			// cars' Red LED will be off
-			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
-			// both Yellow LEDs will be on
-			LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-			LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);	
-			delay_5s();
-			// The pedestrian's GREEN LED will be off 	
-			LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);	
-			// both Yellow LEDs will be off
-			LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
-			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-			// both the pedestrian Red LED and the cars' Green LED will be on
-			LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
-			LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
-			delay_5s();	
-			// both the pedestrian Red LED and the cars' Green LED will be off
-			LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
-			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
-			mode = NORMAL;
-			
+			PedestrianMode();
 		}
 		
 	}
 }
 ISR(EXT_INT_0)
 {
-	uint8_t value;
-	DIO_read(LED_C_RED_PORT, LED_C_RED_PIN, &value);
-	if (value)
+	if(interrupt_state == INTERRUPT_OFF)
 	{
-		color = RED;
-	}
-	else
-	{
-		DIO_read(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN, &value);
+		uint8_t value;
+		DIO_read(LED_C_RED_PORT, LED_C_RED_PIN, &value);
 		if (value)
 		{
-
-			color = YELLOW;
+			color = RED;
 		}
 		else
 		{
-			color = GREEN;
+			DIO_read(LED_C_GREEN_PORT, LED_C_GREEN_PIN, &value);
+			if (value)
+			{
+
+				color = GREEN;
+			}
+			else
+			{
+				color = YELLOW;
+			}
 		}
+		// set mode to pedestrian mode
+		mode = PEDESTRIAN;
+		interrupt_state  = INTERRUPT_ON;
 	}
-	mode = PEDESTRIAN;
+	
+}
+
+void PedestrianMode(void)
+{
+	TurnOffLEDs();
+	//Applying pedestrian mode according to cars' LEDs
+	if (color == RED)
+	{
+		RedLED();
+	}
+	else if (color == GREEN)
+	{
+		GreenLED();
+	}
+	else if (color == YELLOW)
+	{
+		YellowLED();
+	}
+	// cars' Red LED will be off
+	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
+	// both Yellow LEDs will be on
+	LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	delay_5s();
+	// The pedestrian's GREEN LED will be off
+	LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
+	// both Yellow LEDs will be off
+	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	// both the pedestrian Red LED and the cars' Green LED will be on
+	LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
+	LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
+	delay_5s();
+	interrupt_state = INTERRUPT_OFF;
+	mode = NORMAL;
+}
+void TurnOffLEDs(void)
+{
+	// turn off all cars' LEDs
+	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
+	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
+	// turn off all pedestrian's LEDs
+	LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
+	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
+}
+
+void GreenLED(void)
+{
+	LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
+	LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
+	delay_5s();
+	LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
+	LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	delay_5s();
+	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
+	LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
+	LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
+	delay_5s();
+}
+void RedLED(void)
+{
+	LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
+	LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
+	delay_5s();
+}
+void YellowLED(void)
+{
+	LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
+	delay_5s();
+	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
+	LED_on(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_on(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	delay_5s();
+	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
+	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
+	LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
+	LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
+	delay_5s();
 }
