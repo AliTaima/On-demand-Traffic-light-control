@@ -38,4 +38,6 @@ void RedLED(void);
 void YellowLED(void);
 void PedestrianMode(void);
 void TurnOffLEDs(void);
+void toggle_2_LEDs_5s(EN_port_t ledPort1, EN_pin_t ledPin1, EN_port_t ledPort2, EN_pin_t ledPin2);
+void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin);
 #endif /* APPLICATION_H_ */
