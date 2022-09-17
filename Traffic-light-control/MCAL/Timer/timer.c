@@ -51,11 +51,7 @@ void TIMER_stop(void)
     // Timer stop
     TCCR0 = 0x00;
 }
-void delay_512ms(void)
-{
-	TIMER_start(8, 250);
-	TIMER_stop();
-}
+
 void delay_5s(void)
 {
 	TIMER_start(256, 77);
