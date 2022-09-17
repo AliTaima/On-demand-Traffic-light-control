@@ -11,4 +11,4 @@ This is the 2nd project in the Embedded Systems - FWD T2 Professional track
 ## Prepare development environment
 ![image](https://user-images.githubusercontent.com/87614712/190250161-f8c26204-e707-433b-a969-e67ec7502681.png)
 ---
-This [Google_Drive](https://drive.google.com/drive/folders/1bOJX31qadfRvXDWrNbRyTIR_IADXTCaf?usp=sharing) contains all videos we need in this project
+This [Google_Drive](https://drive.google.com/drive/folders/1PM-vSYrJN6sYCLmR_M-Qpgel5Fmu8XFM?usp=sharing) contains all videos we need in this project
