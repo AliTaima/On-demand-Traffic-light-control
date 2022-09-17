@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000178  00000000  00000000  00000944  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001722  00000000  00000000  00000abc  2**0
+  6 .debug_info   00001725  00000000  00000000  00000abc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000931  00000000  00000000  000021de  2**0
+  7 .debug_abbrev 0000095a  00000000  00000000  000021e1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000b80  00000000  00000000  00002b0f  2**0
+  8 .debug_line   00000b57  00000000  00000000  00002b3b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000002b8  00000000  00000000  00003690  2**2
+  9 .debug_frame  000002b8  00000000  00000000  00003694  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000668  00000000  00000000  00003948  2**0
+ 10 .debug_str    00000668  00000000  00000000  0000394c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000007e6  00000000  00000000  00003fb0  2**0
+ 11 .debug_loc    000007e6  00000000  00000000  00003fb4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000108  00000000  00000000  00004796  2**0
+ 12 .debug_ranges 00000108  00000000  00000000  0000479a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -168,11 +168,11 @@ ISR(EXT_INT_0)
   fa:	1f 92       	push	r1
   fc:	cd b7       	in	r28, 0x3d	; 61
   fe:	de b7       	in	r29, 0x3e	; 62
-		1. check the color of cars' LED when the pedestrian push the button
-		2. convert the mode from the normal to pedestrian mode
 		3. turn on the interrupt state the indicate that the user can't implement the ISR again 
 		until finish the first one
+
 	*/ 
+		// 1. check the color of cars' LED when the pedestrian push the button
 	if (interrupt_state == INTERRUPT_OFF)
  100:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
  104:	81 30       	cpi	r24, 0x01	; 1
@@ -222,10 +222,11 @@ ISR(EXT_INT_0)
  140:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <color>
 			}
 		}
-		// set mode to pedestrian mode
+		//	2. convert the mode from the normal to pedestrian mode
 		mode = PEDESTRIAN;
  144:	81 e0       	ldi	r24, 0x01	; 1
  146:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <__data_end>
+		// 3. turn on the interrupt state the indicate that the user can't implement the ISR again
 		interrupt_state = INTERRUPT_ON;
  14a:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
 	}
@@ -254,7 +255,7 @@ ISR(EXT_INT_0)
 00000176 <TurnOffLEDs>:
 	/*
 		Description:
-		Turn off all the LEDs (for cars and pedestrains)
+		Turn off all the LEDs (for cars and pedestrians)
 	*/
 	// turn off all cars' LEDs
 	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
@@ -324,7 +325,7 @@ void toggle_2_LEDs_5s(EN_port_t ledPort1, EN_pin_t ledPin1, EN_port_t ledPort2, 
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
  1d2:	83 b7       	in	r24, 0x33	; 51
  1d4:	84 60       	ori	r24, 0x04	; 4
  1d6:	83 bf       	out	0x33, r24	; 51
@@ -337,7 +338,7 @@ void toggle_2_LEDs_5s(EN_port_t ledPort1, EN_pin_t ledPin1, EN_port_t ledPort2, 
  1d8:	c0 e0       	ldi	r28, 0x00	; 0
  1da:	d0 e0       	ldi	r29, 0x00	; 0
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
  1dc:	22 c0       	rjmp	.+68     	; 0x222 <toggle_2_LEDs_5s+0x64>
@@ -387,7 +388,7 @@ void toggle_2_LEDs_5s(EN_port_t ledPort1, EN_pin_t ledPin1, EN_port_t ledPort2, 
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
  222:	cd 34       	cpi	r28, 0x4D	; 77
@@ -475,7 +476,7 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
  298:	83 b7       	in	r24, 0x33	; 51
  29a:	84 60       	ori	r24, 0x04	; 4
  29c:	83 bf       	out	0x33, r24	; 51
@@ -488,7 +489,7 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
  29e:	c0 e0       	ldi	r28, 0x00	; 0
  2a0:	d0 e0       	ldi	r29, 0x00	; 0
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
  2a2:	1e c0       	rjmp	.+60     	; 0x2e0 <toggle_LED_5s+0x54>
@@ -534,7 +535,7 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
  2e0:	cd 34       	cpi	r28, 0x4D	; 77
@@ -600,14 +601,16 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
  340:	08 95       	ret
 
 00000342 <PedestrianMode>:
-		3.1 turn off cars' Red LED
-		3.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
-		3.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
-		3.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass 
+		4.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
+		4.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
+		4.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass 
 	*/
+	// 1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
 	TurnOffLEDs();
  342:	0e 94 bb 00 	call	0x176	; 0x176 <TurnOffLEDs>
-	// Applying pedestrian mode according to cars' LEDs
+	// 	2. check the color of cars' LED when the pedestrian push the button
+	// 3. implement the mode according to the cars' LED color
+	
 	if (color == RED)
  346:	80 91 63 00 	lds	r24, 0x0063	; 0x800063 <color>
  34a:	81 11       	cpse	r24, r1
@@ -632,24 +635,25 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
 		YellowLED();
  362:	0e 94 78 01 	call	0x2f0	; 0x2f0 <YellowLED>
 	}
-	// cars' Red LED will be off
+	// 4. continue the pedestrian mode until led cars pass
+	// 	4.1 turn off cars' Red LED
 	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
  366:	60 e0       	ldi	r22, 0x00	; 0
  368:	80 e0       	ldi	r24, 0x00	; 0
  36a:	0e 94 34 02 	call	0x468	; 0x468 <LED_off>
-	// both Yellow LEDs will be on
+	// 	4.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
 	toggle_2_LEDs_5s(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN, LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
  36e:	21 e0       	ldi	r18, 0x01	; 1
  370:	40 e0       	ldi	r20, 0x00	; 0
  372:	61 e0       	ldi	r22, 0x01	; 1
  374:	81 e0       	ldi	r24, 0x01	; 1
  376:	0e 94 df 00 	call	0x1be	; 0x1be <toggle_2_LEDs_5s>
-	// The pedestrian's GREEN LED will be off
+	//	4.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
+
 	LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
  37a:	62 e0       	ldi	r22, 0x02	; 2
  37c:	81 e0       	ldi	r24, 0x01	; 1
  37e:	0e 94 34 02 	call	0x468	; 0x468 <LED_off>
-	// both Yellow LEDs will be off
 	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
  382:	61 e0       	ldi	r22, 0x01	; 1
  384:	81 e0       	ldi	r24, 0x01	; 1
@@ -658,7 +662,7 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
  38a:	61 e0       	ldi	r22, 0x01	; 1
  38c:	80 e0       	ldi	r24, 0x00	; 0
  38e:	0e 94 34 02 	call	0x468	; 0x468 <LED_off>
-	// both the pedestrian Red LED and the cars' Green LED will be on
+	// 		4.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass
 	LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
  392:	60 e0       	ldi	r22, 0x00	; 0
  394:	81 e0       	ldi	r24, 0x01	; 1
@@ -686,14 +690,14 @@ void App_start(void)
  3b2:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <__data_end>
  3b6:	81 11       	cpse	r24, r1
  3b8:	45 c0       	rjmp	.+138    	; 0x444 <__EEPROM_REGION_LENGTH__+0x44>
-				2.1 check if the user push the button during this duration or not, to call the pedestrian's mode
-				3. blink cars' Yellow LED and turn on the pedestrians' Red LED
 				3.1 check if the user push the button during this duration or not, to call the pedestrian's mode
-				4. Trun on cars' Green LED and blink the pedestrians' Yellow LED
+				4. Turn on cars' Green LED and blink the pedestrians' Yellow LED
 			*/
+			// 1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
+				
 			TurnOffLEDs();
  3ba:	0e 94 bb 00 	call	0x176	; 0x176 <TurnOffLEDs>
-			// turn on cars' Red LED for 5 s and pedestrian's Green LED will be on
+			// 2. turn on cars' Red LED and the pedestrian's Green LED
 			LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
  3be:	60 e0       	ldi	r22, 0x00	; 0
  3c0:	80 e0       	ldi	r24, 0x00	; 0
@@ -712,7 +716,7 @@ void App_start(void)
  3da:	0e 94 34 02 	call	0x468	; 0x468 <LED_off>
 			delay_5s();
  3de:	0e 94 06 04 	call	0x80c	; 0x80c <delay_5s>
-			// check if interrupt is or not to run pedestrian mode
+			// 2.1 check if the user push the button during this duration or not, to call the pedestrian's mode
 			if (interrupt_state == INTERRUPT_ON)
  3e2:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
  3e6:	88 23       	and	r24, r24
@@ -720,7 +724,7 @@ void App_start(void)
 			{
 				continue;
 			}
-			// Turn on cars' Yellow led for 5 s and pedestrian's Yellow LED will be on
+			// 3. blink cars' Yellow LED and turn on the pedestrians' Red LED
 			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
  3ea:	60 e0       	ldi	r22, 0x00	; 0
  3ec:	80 e0       	ldi	r24, 0x00	; 0
@@ -741,7 +745,7 @@ void App_start(void)
  40a:	61 e0       	ldi	r22, 0x01	; 1
  40c:	80 e0       	ldi	r24, 0x00	; 0
  40e:	0e 94 46 01 	call	0x28c	; 0x28c <toggle_LED_5s>
-			// check if interrupt is or not to run pedestrian mode
+			//3.1 check if the user push the button during this duration or not, to call the pedestrian's mode
 			if (interrupt_state == INTERRUPT_ON)
  412:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
  416:	88 23       	and	r24, r24
@@ -749,7 +753,7 @@ void App_start(void)
 			{
 				continue;
 			}
-			// Turn on cars' Green led for 5 s and pedestrian's Red LED will be on
+			//4. Turn on cars' Green LED and blink the pedestrians' Yellow LED
 			LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
  41a:	60 e0       	ldi	r22, 0x00	; 0
  41c:	81 e0       	ldi	r24, 0x01	; 1
@@ -833,7 +837,7 @@ void LED_toggle(EN_port_t ledPort, EN_pin_t ledPin)
  474:	08 95       	ret
 
 00000476 <main>:
-//#include <util/delay.h>
+
 #include "Application/application.h"
 int main(void)
 {

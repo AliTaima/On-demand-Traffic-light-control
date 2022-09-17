@@ -11,6 +11,6 @@
 int main(void)
 {
 	interrupt_rising_init();
-	while(1);
 }
 */
+

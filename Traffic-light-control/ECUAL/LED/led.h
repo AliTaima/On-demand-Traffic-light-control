@@ -11,6 +11,8 @@
 /* Led driver in upper layer, so we include DIO driver(from low layer) inside it */
 /************************************************************************/
 #include "../../MCAL/Timer/timer.h"
+#include "../../MCAL/DIO/dio.h"
+
 
 /************************************************************************/
 /*					3LEDs for cars										*/

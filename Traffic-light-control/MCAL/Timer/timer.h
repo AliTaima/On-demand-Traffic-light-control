@@ -7,13 +7,9 @@
 
 #ifndef TIMER_H_
 #define TIMER_H_
-#include "../DIO/dio.h"
-// typedef EN_prescalar_t
-// {
+#include "../../Utilities/registers.h"
+#include "../../Utilities/types.h"
 
-// }EN_prescalar_t;
-// define number of overflows to get our delay
-#define NUMBER_OF_OVERFLOW 20
 
 void TIMER_init(void);
 void TIMER_start(uint16_t preScalar, uint32_t number_of_overflow);

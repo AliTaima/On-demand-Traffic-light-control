@@ -35,37 +35,39 @@ void App_start(void)
 		{
 			/*
 				This is the normal mode in on demand traffic light control system, and there are the steps to implement this mode
-				1. turn off all LEDs, to prevent the errors if it return from the pedestrain's mode
+				1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
 				2. turn on cars' Red LED and the pedestrian's Green LED
 				2.1 check if the user push the button during this duration or not, to call the pedestrian's mode
 				3. blink cars' Yellow LED and turn on the pedestrians' Red LED
 				3.1 check if the user push the button during this duration or not, to call the pedestrian's mode
-				4. Trun on cars' Green LED and blink the pedestrians' Yellow LED
+				4. Turn on cars' Green LED and blink the pedestrians' Yellow LED
 			*/
+			// 1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
+				
 			TurnOffLEDs();
-			// turn on cars' Red LED for 5 s and pedestrian's Green LED will be on
+			// 2. turn on cars' Red LED and the pedestrian's Green LED
 			LED_on(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_on(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
 			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
 			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 			delay_5s();
-			// check if interrupt is or not to run pedestrian mode
+			// 2.1 check if the user push the button during this duration or not, to call the pedestrian's mode
 			if (interrupt_state == INTERRUPT_ON)
 			{
 				continue;
 			}
-			// Turn on cars' Yellow led for 5 s and pedestrian's Yellow LED will be on
+			// 3. blink cars' Yellow LED and turn on the pedestrians' Red LED
 			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
 			LED_off(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 			LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
 			toggle_LED_5s(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-			// check if interrupt is or not to run pedestrian mode
+			//3.1 check if the user push the button during this duration or not, to call the pedestrian's mode
 			if (interrupt_state == INTERRUPT_ON)
 			{
 				continue;
 			}
-			// Turn on cars' Green led for 5 s and pedestrian's Red LED will be on
+			//4. Turn on cars' Green LED and blink the pedestrians' Yellow LED
 			LED_off(LED_P_RED_PORT, LED_P_RED_PIN);
 			LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
 			LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
@@ -87,7 +89,9 @@ ISR(EXT_INT_0)
 		2. convert the mode from the normal to pedestrian mode
 		3. turn on the interrupt state the indicate that the user can't implement the ISR again 
 		until finish the first one
+
 	*/ 
+		// 1. check the color of cars' LED when the pedestrian push the button
 	if (interrupt_state == INTERRUPT_OFF)
 	{
 		uint8_t value;
@@ -109,8 +113,9 @@ ISR(EXT_INT_0)
 				color = YELLOW;
 			}
 		}
-		// set mode to pedestrian mode
+		//	2. convert the mode from the normal to pedestrian mode
 		mode = PEDESTRIAN;
+		// 3. turn on the interrupt state the indicate that the user can't implement the ISR again
 		interrupt_state = INTERRUPT_ON;
 	}
 }
@@ -120,16 +125,20 @@ void PedestrianMode(void)
 	/*
 	Description:
 	This function implement the pedestrian's mode
-	1. check the color of cars' LED when the pedestrian push the button
-	2. implement the mode according to the cars' LED color
-	3. continue the pedestrain mode until led cars pass 
-		3.1 turn off cars' Red LED
-		3.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
-		3.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
-		3.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass 
+	1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
+	2. check the color of cars' LED when the pedestrian push the button
+	3. implement the mode according to the cars' LED color
+	4. continue the pedestrian mode until led cars pass 
+		4.1 turn off cars' Red LED
+		4.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
+		4.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
+		4.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass 
 	*/
+	// 1. turn off all LEDs, to prevent the errors if it return from the pedestrian's mode
 	TurnOffLEDs();
-	// Applying pedestrian mode according to cars' LEDs
+	// 	2. check the color of cars' LED when the pedestrian push the button
+	// 3. implement the mode according to the cars' LED color
+	
 	if (color == RED)
 	{
 		RedLED();
@@ -142,16 +151,17 @@ void PedestrianMode(void)
 	{
 		YellowLED();
 	}
-	// cars' Red LED will be off
+	// 4. continue the pedestrian mode until led cars pass
+	// 	4.1 turn off cars' Red LED
 	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
-	// both Yellow LEDs will be on
+	// 	4.2 blink cars' Yellow LED and pedestrians' Yellow LED for 5 s
 	toggle_2_LEDs_5s(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN, LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-	// The pedestrian's GREEN LED will be off
+	//	4.3 Turn off Pedestrian's Yellow and Green LEDs and cars' Yellow LED
+
 	LED_off(LED_P_GREEN_PORT, LED_P_GREEN_PIN);
-	// both Yellow LEDs will be off
 	LED_off(LED_P_YELLOW_PORT, LED_P_YELLOW_PIN);
 	LED_off(LED_C_YELLOW_PORT, LED_C_YELLOW_PIN);
-	// both the pedestrian Red LED and the cars' Green LED will be on
+	// 		4.4 Turn on cars' Red LED and the pedestrian's Green LED, to let cars pass
 	LED_on(LED_P_RED_PORT, LED_P_RED_PIN);
 	LED_on(LED_C_GREEN_PORT, LED_C_GREEN_PIN);
 	delay_5s();
@@ -162,7 +172,7 @@ void TurnOffLEDs(void)
 {
 	/*
 		Description:
-		Turn off all the LEDs (for cars and pedestrains)
+		Turn off all the LEDs (for cars and pedestrians)
 	*/
 	// turn off all cars' LEDs
 	LED_off(LED_C_RED_PORT, LED_C_RED_PIN);
@@ -234,7 +244,7 @@ void toggle_2_LEDs_5s(EN_port_t ledPort1, EN_pin_t ledPin1, EN_port_t ledPort2, 
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
 	{
@@ -259,7 +269,7 @@ void toggle_LED_5s(EN_port_t ledPort, EN_pin_t ledPin)
 	*/
 	uint32_t overflowCounter = 0;
 
-	TCCR0 |= (1 << 2); // set pin2, 256 prescalar
+	TCCR0 |= (1 << 2); // set pin2, 256 pre-scalar
 	// Repeated number of overflow times
 	while (overflowCounter < 77)
 	{

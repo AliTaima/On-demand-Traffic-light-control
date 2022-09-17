@@ -6,9 +6,6 @@
  */ 
 
 
-
-// #include <avr/io.h>
-//#include <util/delay.h>
 #include "Application/application.h"
 int main(void)
 {
@@ -17,4 +14,5 @@ int main(void)
 	App_start();
  	
 }
+
 
