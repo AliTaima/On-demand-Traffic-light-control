@@ -10,7 +10,8 @@
 
 // include register header
 #include "../../Utilities/registers.h"
-
+// include the types header
+#include "../../Utilities/types.h"
 // include interrupt header
 #include "../Interrupt_Library/interrupts.h"
 /************************************************************************/
@@ -60,9 +61,7 @@ typedef enum EN_port_t
 	PORT_D
 } EN_port_t;
 
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
+
 
 // all driver function prototypes
 
