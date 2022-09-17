@@ -32,7 +32,6 @@ typedef enum EN_interrupt_state_t
 
 void App_init(void);
 void App_start(void);
-void pedestrian_mode(void);
 void GreenLED(void);
 void RedLED(void);
 void YellowLED(void);

@@ -145,10 +145,16 @@
     <Compile Include="ECUAL\BUTTON\button.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ECUAL\BUTTON\test.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ECUAL\LED\led.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ECUAL\LED\led.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\LED\test.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -169,6 +175,12 @@
     <Compile Include="MCAL\Interrupt_Library\interrupts.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Interrupt_Library\test.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Timer\test.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\Timer\timer.c">
       <SubType>compile</SubType>
     </Compile>
@@ -176,6 +188,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utilities\registers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utilities\types.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
